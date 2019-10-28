@@ -1,0 +1,5 @@
+document.getElementById('title').innerHTML = "Adventure Game"
+document.getElementById('description').innerHTML = "Welkom bij deze coole adventure game! :)"
+document.getElementById('button1').innerHTML = "Keuze 1"
+document.getElementById('button2').innerHTML = "Keuze 2"
+document.getElementById('button3').innerHTML = "Keuze 3"

@@ -1,0 +1,12 @@
+#button1, #button2, #button3 {
+  margin: 10px;
+  padding: 10px 50px;
+  display: block;
+  background: green;
+  border-radius: 25px;
+}
+
+#button1:hover, #button2:hover, #button3:hover {
+  background: red;
+}
+/*# sourceMappingURL=style.css.map */
