@@ -1,11 +1,21 @@
 #button1, #button2, #button3{
     margin: 10px;
-    padding: 10px 50px;
+    width: 150px;
+    height: 25px;
     display: block;
     background: green;
     border-radius: 25px;
+    border: 1px solid black;
 }
 
 #button1:hover, #button2:hover, #button3:hover{
     background: red;
+}
+
+#inventoryItem{
+    width: 50px;
+}
+
+#inventoryItemText{
+    color: red;
 }
