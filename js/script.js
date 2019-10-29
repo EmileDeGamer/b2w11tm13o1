@@ -18,7 +18,7 @@ function onClickButton(){
 
 ChangeButtonText("Start", "Opties", "Stop")
 ChangeDescriptionText("Welkom bij deze coole adventure game! :)")
-ChangeInventoryItem("Knife")
+//ChangeInventoryItem("Knife")
 function ChangeButtonText(buttonText1, buttonText2, buttonText3){
     button1.innerHTML = buttonText1
     button2.innerHTML = buttonText2
