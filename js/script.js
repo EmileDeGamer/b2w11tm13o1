@@ -9,6 +9,7 @@ let inventoryItem = document.getElementById('inventoryItem')
 button1.onclick = function(){onClickButton()}
 button2.onclick = function(){onClickButton()}
 button3.onclick = function(){onClickButton()}
+inventoryItem.style.display = "none"
 
 title.innerHTML = "Adventure Game"
 
@@ -30,6 +31,7 @@ function ChangeDescriptionText(descText){
 }
 
 function ChangeInventoryItem(item){
+    inventoryItem.style.display = "block"
     inventoryItem.alt = item
     inventoryItem.src = "./images/" + item + ".png"
     let span = document.createElement('span')
