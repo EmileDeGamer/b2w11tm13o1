@@ -1,11 +1,36 @@
+html{
+    height: 100%;
+    max-width: 100%;
+    color: black;
+    text-align: center;
+}
+
+body{
+    margin: 0;
+    min-height: 100%;
+    max-width: 100%;
+}
+
+#game-container{
+    height: 100vh;
+}
+
+#game-buttons{
+    position: relative;
+    //top: 77.5%;
+}
+
 #button1, #button2, #button3{
+    //position: relative;
+    //left: 45%;
     margin: 10px;
     width: 150px;
     height: 25px;
-    display: block;
+    //display: block;
     background: green;
     border-radius: 25px;
     border: 1px solid black;
+    color: white;
 }
 
 #button1:hover, #button2:hover, #button3:hover{
@@ -17,5 +42,16 @@
 }
 
 #inventoryItemText{
-    color: red;
+    
+}
+
+#title{
+    margin: 0;
+    font-size: 50px;
+}
+
+#description{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
 }
