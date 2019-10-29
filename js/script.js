@@ -9,34 +9,68 @@ let button3 = document.getElementById('button3')
 let inventoryItem = document.getElementById('inventoryItem')
 
 let inventoryItems = { "Knife" : false, "Pistol" : false}
+let fullscreenEnabled = "false"
 
-start()
+main()
 
-function start(){
+function main(){
     Intervals()
     ChangeTitle("Adventure Game")
     ChangeBackground("Start")
     ChangeButtonText("Start", "Opties", "Stop")
     ChangeDescriptionText("Welkom bij deze coole adventure game! :)")
-    buttons.style.top = "77.5%"
     buttons.style.position = "relative"
-    /*button1.style.display = "block"
-    button2.style.display = "block"
-    button3.style.display = "block"*/
-    
-    button1.onclick = function(){onClickButton()}
-    button2.onclick = function(){onClickButton()}
-    button3.onclick = function(){onClickButton()}
-}
-
-function onClickButton(){
-    buttons.style.top = "0"
+    button1.onclick = function(){start()}
+    button2.onclick = function(){options()}
     button1.style.position = "relative"
     button2.style.position = "relative"
     button3.style.position = "relative"
     button1.style.left = "45%"
     button2.style.left = "45%"
     button3.style.left = "45%"
+    button3.style.display = "none"
+    button1.style.display = "block"
+    button2.style.display = "block"
+}
+
+function start(){
+    buttons.style.top = "77.5%"
+    button1.style.position = "relative"
+    button2.style.position = "relative"
+    button3.style.position = "relative"
+    button1.style.display = "inline-block"
+    button2.style.display = "inline-block"
+    button3.style.display = "inline-block"
+    button1.style.left = "0%"
+    button2.style.left = "0%"
+    button3.style.left = "0%"
+}
+
+function options(){
+    button1.style.display = "block"
+    button2.style.display = "block"
+    button3.style.display = "none"
+    button2.onclick = function(){main()}
+    if (fullscreenEnabled == "true"){
+        button1.onclick = function(){exitFullscreen()}
+        ChangeButtonText("Uit Fullscreen", "Terug")
+    }
+    else if (fullscreenEnabled == "false"){
+        button1.onclick = function(){fullscreen()}
+        ChangeButtonText("Fullscreen", "Terug")
+    }
+}
+
+function fullscreen(){
+    game.requestFullscreen()
+    fullscreenEnabled = "true"
+    options()
+}
+
+function exitFullscreen(){
+    document.exitFullscreen()
+    fullscreenEnabled = "false"
+    options()
 }
 
 function ChangeButtonText(buttonText1, buttonText2, buttonText3){
