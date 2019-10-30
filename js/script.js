@@ -15,14 +15,13 @@ let fullscreenEnabled = "false"
 main()
 
 function main(){
-    Intervals()
+    CheckInventoryItem()
     ChangeTitle("Adventure Game")
     ChangeBackground("Main")
     ChangeButtonText("Start", "Opties", "")
     ChangeDescriptionText("Welkom bij deze coole adventure game! :)")
     buttons.style.position = "relative"
-    button1.onclick = function(){start()}
-    button2.onclick = function(){options()}
+    ChangeButtonFunction(start, options, )
     ChangeButtonPosition("relative", "relative", "relative")
     ChangeButtonOffsetLeft("45%", "45%", "45%")
     ChangeButtonDisplay("block", "block", "none")
@@ -30,21 +29,26 @@ function main(){
 }
 
 function start(){
+    ChangeObject("Knife")
+    ChangeObjectPosition("absolute")
+    ChangeObjectOffsetTop("96.5%")
+    ChangeObjectOffsetLeft("80%")
+    ChangeTitle(" Level 1: Het prachtige bos")
+    ChangeDescriptionText("Ergens in dit mooie bos ligt een mes verstopt! :)")
+    ChangeBackground("Start")
+    ChangeButtonDisplay("none", "none", "none")
+    
+}
+
+function level1(){
+    ChangeInventoryItem("Knife")
     buttons.style.top = "77.5%"
     ChangeButtonPosition("relative", "relative", "relative")
     ChangeButtonDisplay("inline-block", "inline-block", "inline-block")
     ChangeButtonOffsetLeft("0%", "0%", "0%")
-    ChangeButtonText("Links", "Rechtdoor", "Rechts")
-    button1.onclick = function(){links()}
-    button2.onclick = function(){rechtdoor()}
-    button3.onclick = function(){rechts()}
-    ChangeTitle(" Level 1: Vind een mes")
-    ChangeDescriptionText("Ergens ligt een mes vind het! :D")
-    ChangeBackground("Start")
-    ChangeObject("Knife")
-    ChangeObjectPosition("absolute")
-    object.style.top = "96.5%"
-    object.style.left = "80%"
+    ChangeButtonText("Links verder door het bos", "Rechtdoor", "Rechts over brug")
+    ChangeButtonFunction(links, rechtdoor, rechts)
+    ChangeDescriptionText("Kies nu waar u naartoe wilt! :)")
 }
 
 function links(){
@@ -85,6 +89,12 @@ function exitFullscreen(){
     document.exitFullscreen()
     fullscreenEnabled = "false"
     options()
+}
+
+function ChangeButtonFunction(function1, function2, funtion3){
+    button1.onclick = function(){function1()}
+    button2.onclick = function(){function2()}
+    button3.onclick = function(){funtion3()}
 }
 
 function ChangeButtonPosition(pos1, pos2, pos3){
@@ -131,12 +141,6 @@ function CheckInventoryItem(){
     if (inventoryItems["Knife"] == false && inventoryItems["Pistol"] == false){
         inventoryItem.style.display = "none"
     }
-    if (inventoryItems["Knife"] == true){
-        ChangeInventoryItem("Knife")
-    }
-    if (inventoryItems["Pistol"] == true){
-        ChangeInventoryItem("Pistol")
-    }
 }
 
 function ChangeInventoryItem(item){
@@ -145,20 +149,20 @@ function ChangeInventoryItem(item){
     inventoryItem.src = "./images/" + item + ".png"
 }
 
-function Intervals(){
-    setInterval(CheckInventoryItem, 100)
-}
-
-function objectPickup(){
-    inventoryItems["Knife"] = true
+function objectPickup(name){
+    inventoryItems[name] = true
     object.style.display = "none"
+    alert('Je hebt de ' + name + " gevonden! :)")
+    if (name == "Knife"){
+        level1()
+    }
 }
 
 function ChangeObject(name){
     let img = document.createElement('img')
     img.id = "Object"
     img.src = "./images/" + name + ".png"
-    img.onclick = function(){objectPickup()}
+    img.onclick = function(){objectPickup(name)}
     img.style.width = "25px"
     img.style.height = "25px"
     document.body.appendChild(img)
@@ -167,6 +171,14 @@ function ChangeObject(name){
 
 function ChangeObjectPosition(pos){
     object.style.position = pos
+}
+
+function ChangeObjectOffsetTop(offset){
+    object.style.top = offset
+}
+
+function ChangeObjectOffsetLeft(offset){
+    object.style.left = offset
 }
 
 /*let span = document.createElement('span')
