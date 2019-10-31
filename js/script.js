@@ -11,13 +11,14 @@ let object
 
 let inventoryItems = { "Knife" : false, "Pistol" : false}
 let fullscreenEnabled = "false"
+let kills = 0
 
 main()
 
 function main(){
     CheckInventoryItem()
     ChangeTitle("Adventure Game")
-    ChangeBackground("Main")
+    ChangeBackground("Main", "cover")
     ChangeButtonText("Start", "Opties", "")
     ChangeDescriptionText("Welkom bij deze coole adventure game! :)")
     buttons.style.position = "relative"
@@ -35,9 +36,8 @@ function start(){
     ChangeObjectOffsetLeft("80%")
     ChangeTitle(" Level 1: Het prachtige bos")
     ChangeDescriptionText("Ergens in dit mooie bos ligt een mes verstopt! :)")
-    ChangeBackground("Start")
     ChangeButtonDisplay("none", "none", "none")
-    
+    ChangeBackground("Start", "cover")
 }
 
 function level1(){
@@ -47,23 +47,66 @@ function level1(){
     ChangeButtonDisplay("inline-block", "inline-block", "inline-block")
     ChangeButtonOffsetLeft("0%", "0%", "0%")
     ChangeButtonText("Links verder door het bos", "Rechtdoor", "Rechts over brug")
-    ChangeButtonFunction(links, rechtdoor, rechts)
+    ChangeButtonFunction(links, rechtdoor, level2)
     ChangeDescriptionText("Kies nu waar u naartoe wilt! :)")
 }
 
 function links(){
-    ChangeBackground("Links")
-    ChangeButtonText("Terug", "Rechtdoor", "Rechts")
+    ChangeBackground("Beer", "contain")
+    ChangeButtonText("Steek de beer neer", "Laat de beer u opeten", "")
+    ChangeButtonFunction(steekBeer, opetenDoorBeer, )
+    ChangeButtonDisplay("inline-block", "inline-block", "none")
+    ChangeDescriptionText("Helaas, u bent een beer tegengekomen! :(")
+    ChangeTitle("Beer!")
 }
 
 function rechtdoor(){
-    ChangeBackground("Rechtdoor")
-    ChangeButtonText("Links", "Terug", "Rechts")
+    ChangeBackground("DOOD", "contain")
+    Restart()
+    ChangeDescriptionText("Helaas, u bent tegen een boom gelopen waardoor u dood bent gegaan! :(")
+    ChangeTitle("DOOD")
 }
 
-function rechts(){
-    ChangeBackground("Rechts")
-    ChangeButtonText("Links", "Rechtdoor", "Terug")
+function level2(){
+    ChangeBackground("Brug", "cover")
+    ChangeButtonDisplay("inline-block", "inline-block", "inline-block")
+    ChangeTitle("Level 2: De levensgevaarlijke brug")
+    ChangeDescriptionText("Kies wat u op de brug wilt doen! :)")
+    ChangeButtonText("Verder gaan op de brug", "Zwemmend opzoek gaan naar een eiland", "Jezelf neersteken")
+    ChangeButtonFunction(brug, zwemmen, neersteken)
+}
+
+function brug(){
+
+}
+
+function zwemmen(){
+
+}
+
+function neersteken(){
+    kills++
+    CheckKills()
+    ChangeBackground("DOOD", "contain")
+    Restart()
+    ChangeDescriptionText("Helaas, u heeft u zelf neergestoken! :(")
+    ChangeTitle("DOOD")
+}
+
+function steekBeer(){
+    level1()
+    ChangeBackground("Start", "cover")
+    ChangeButtonDisplay("none", "inline-block", "inline-block")
+    kills++
+    CheckKills()
+    alert("U heeft de beer verslagen! :) \nVervolg u route! :)")
+}
+
+function opetenDoorBeer(){
+    ChangeBackground("DOOD", "contain")
+    Restart()
+    ChangeDescriptionText("Helaas, u bent opgegeten door een beer! :(")
+    ChangeTitle("DOOD")
 }
 
 function options(){
@@ -89,6 +132,25 @@ function exitFullscreen(){
     document.exitFullscreen()
     fullscreenEnabled = "false"
     options()
+}
+
+function Restart(){
+    ChangeButtonDisplay("none", "inline-block", "none")
+    ChangeButtonText("", "Opnieuw", "")
+    ChangeButtonFunction("",reloadPage,)
+}
+
+function reloadPage(){
+    location.reload()
+}
+
+function CheckKills(){
+    if (kills == 1){
+        ChangeInventoryItem("KnifeWithBlood")
+    }
+    if (kills == 2){
+        ChangeInventoryItem("KnifeWithDoubleBlood")
+    }
 }
 
 function ChangeButtonFunction(function1, function2, funtion3){
@@ -131,10 +193,12 @@ function ChangeDescriptionText(descText){
     description.style.backgroundColor = "rgba(255,255,255,0.5)";
 }
 
-function ChangeBackground(background){
+function ChangeBackground(background, type){
     game.style.background = "url('./images/" + background + ".png') no-repeat"
-    game.style.backgroundSize = "cover"
+    game.style.backgroundSize = type
     game.style.backgroundPosition = "center"
+    game.style.width = "100vw"
+    game.style.height = "100vh"
 }
 
 function CheckInventoryItem(){
