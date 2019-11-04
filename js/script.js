@@ -9,7 +9,7 @@ let button3 = document.getElementById('button3')
 let inventoryItem = document.getElementById('inventoryItem')
 let object, locks = []
 
-let fullscreenEnabled = "false", pauseMenu = "false"
+let fullscreenEnabled = "false"
 let kills = 0                   
 
 main()
@@ -99,7 +99,7 @@ function vernietigen(){
 function vervolgen(){
     ChangeBackground("Einde", "cover")
     ChangeTitle("Level 4: Einde")
-    ChangeDescriptionText("Kies 1 van de 3 sleutelgaten. LET OP: er is er maar 1 die past! ;)")
+    ChangeDescriptionText("Kies 1 van de " + locks.length  + " sleutelgaten. LET OP: er is er maar 1 die past! ;)")
     CreateLocks(Math.floor(Math.random() * (10 - 3 + 1)) + 3)
 }
 
@@ -174,8 +174,14 @@ function win(){
     }
     ChangeBackground("Finish", "contain")
     ChangeTitle("Gewonnen! :)")
-    ChangeDescriptionText("Gefeliciteerd je hebt het spel uitgespeeld! ;)")
+    ChangeDescriptionText("Gefeliciteerd u heeft het spel uitgespeeld! ;)")
     Restart()
+    if (kills == 1){
+        alert("U heeft het zo vredig mogelijk gespeeld! :)")
+    }
+    else if (kills == 2){
+        alert("U heeft alles wat op u pad kwam vermoord! :(")
+    }
 }
 
 function ChangeButtonFunction(function1, function2, funtion3){
