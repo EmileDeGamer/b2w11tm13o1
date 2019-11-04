@@ -9,9 +9,10 @@ let button3 = document.getElementById('button3')
 let inventoryItem = document.getElementById('inventoryItem')
 let object
 
-let inventoryItems = { "Knife" : false, "Pistol" : false}
+let inventoryItems = { "Knife" : false, "Key" : false}
 let fullscreenEnabled = "false"
 let kills = 0
+description.style.fontSize = "22.5px"
 
 main()
 
@@ -24,7 +25,7 @@ function main(){
     buttons.style.position = "relative"
     ChangeButtonFunction(start, options, )
     ChangeButtonPosition("relative", "relative", "relative")
-    ChangeButtonOffsetLeft("45%", "45%", "45%")
+    ChangeButtonOffsetLeft("42.5%", "42.5%", "42.5%")
     ChangeButtonDisplay("block", "block", "none")
     //console.log(('b' + 'a' + + 'a' + 'a').toLowerCase())
 }
@@ -45,8 +46,8 @@ function level1(){
     buttons.style.top = "77.5%"
     ChangeButtonPosition("relative", "relative", "relative")
     ChangeButtonDisplay("inline-block", "inline-block", "inline-block")
-    ChangeButtonOffsetLeft("0%", "0%", "0%")
-    ChangeButtonText("Links verder door het bos", "Rechtdoor", "Rechts over brug")
+    ChangeButtonOffsetLeft("0%", "0%", "0")
+    ChangeButtonText("Links verder door het bos", "Rechtdoor", "Rechts over de brug")
     ChangeButtonFunction(links, rechtdoor, level2)
     ChangeDescriptionText("Kies nu waar u naartoe wilt! :)")
 }
@@ -56,7 +57,7 @@ function links(){
     ChangeButtonText("Steek de beer neer", "Laat de beer u opeten", "")
     ChangeButtonFunction(steekBeer, opetenDoorBeer, )
     ChangeButtonDisplay("inline-block", "inline-block", "none")
-    ChangeDescriptionText("Helaas, u bent een beer tegengekomen! :(")
+    ChangeDescriptionText("O nee, een beer! :(")
     ChangeTitle("Beer!")
 }
 
@@ -77,11 +78,44 @@ function level2(){
 }
 
 function brug(){
+    ChangeBackground("Octopus", "cover")
+    ChangeButtonDisplay("inline-block", "inline-block", "none")
+    ChangeTitle("Level 3: Octopus")
+    ChangeDescriptionText("O nee, een octopus! :(")
+    ChangeButtonText("De octopus vernietigen", "Jezelf laten meenemen")
+    ChangeButtonFunction(vernietigen, meenemen, )
+}
+
+function vernietigen(){
+    kills++
+    CheckKills()
+    ChangeDescriptionText("Yes! De octopus is verslagen! :)")
+    ChangeTitle("Level 3: Octopus verslagen")
+    ChangeButtonDisplay("inline-block", "none", "none")
+    ChangeButtonText("Vervolgen", "", "")
+    ChangeBackground("Water", "cover")
+    ChangeButtonFunction(vervolgen, "" ,)
+    inventoryItems["Key"] = true
+    ChangeInventoryItem = "Key"
+    alert("U heeft de octopus verslagen en u heeft een sleutel gevonden! :) \nVervolg u route! :)")
+}
+
+function vervolgen(){
 
 }
 
-function zwemmen(){
+function meenemen(){
+    ChangeBackground("DOOD", "contain")
+    Restart()
+    ChangeDescriptionText("Helaas, u bent gestikt! :(")
+    ChangeTitle("DOOD")
+}
 
+function zwemmen(){
+    ChangeBackground("Haai", "contain")
+    ChangeTitle("DOOD")
+    ChangeDescriptionText("Helaas, u bent opgegeten door een haai! :(")
+    Restart()
 }
 
 function neersteken(){
@@ -185,12 +219,12 @@ function ChangeButtonText(buttonText1, buttonText2, buttonText3){
 
 function ChangeTitle(titleText){
     title.innerHTML = titleText
-    title.style.backgroundColor = "rgba(255,255,255,0.5)";
+    title.style.backgroundColor = "rgba(255,255,255,0.5)"
 }
 
 function ChangeDescriptionText(descText){
     description.innerHTML = descText
-    description.style.backgroundColor = "rgba(255,255,255,0.5)";
+    description.style.backgroundColor = "rgba(255,255,255,0.5)"
 }
 
 function ChangeBackground(background, type){
@@ -202,15 +236,34 @@ function ChangeBackground(background, type){
 }
 
 function CheckInventoryItem(){
-    if (inventoryItems["Knife"] == false && inventoryItems["Pistol"] == false){
+    if (inventoryItems["Knife"] == false && inventoryItems["Key"] == false){
         inventoryItem.style.display = "none"
     }
 }
 
 function ChangeInventoryItem(item){
-    inventoryItem.style.display = "block"
-    inventoryItem.alt = item
-    inventoryItem.src = "./images/" + item + ".png"
+    if (item == "Knife"){
+        let item1 = document.createElement('img')
+        item1.style.display = "block"
+        item1.style.position = "absolute"
+        item1.style.top = "10%"
+        item1.src = "./images/" + item + ".png"
+        item1.alt = item
+        item1.style.width = "100px"
+        item1.style.height = "100px"
+        document.body.appendChild(item1)
+    }
+    else if (item == "Key"){
+        let item2 = document.createElement('img')
+        item2.style.display = "block"
+        item2.style.position = "absolute"
+        item2.style.top = "20%"
+        item2.src = "./images/" + item + ".png"
+        item2.alt = item
+        item2.style.width = "100px"
+        item2.style.height = "100px"
+        document.body.appendChild(item2)
+    }
 }
 
 function objectPickup(name){
