@@ -100,7 +100,7 @@ function vervolgen(){
     ChangeBackground("Einde", "cover")
     ChangeTitle("Level 4: Einde")
     ChangeDescriptionText("Kies 1 van de 3 sleutelgaten. LET OP: er is er maar 1 die past! ;)")
-    CreateLocks(3)
+    CreateLocks(Math.floor(Math.random() * (10 - 3 + 1)) + 3)
 }
 
 function meenemen(){
@@ -296,14 +296,17 @@ function CreateLocks(amount){
         locks[i].style.position = "absolute"
         locks[i].style.top = Math.floor(Math.random() * screen.height / 20) + "%"
         locks[i].style.left = Math.floor(Math.random() * screen.width / 20) + "%"
+        if (i == 0){
+            locks[i].onclick = function(){win()}
+        }
+        else{
+            locks[i].onclick = function(){locks[i].style.display = "none"}
+        }
         document.body.appendChild(locks[i])
     }
-    locks[0].onclick = function(){lock1()}
-    locks[1].onclick = function(){lock2()}
-    locks[2].onclick = function(){lock3()}
 }
 
-function lock1(){
+function win(){
     for (let i = 0; i < locks.length; i++) {
         locks[i].style.display = "none"
     }
@@ -311,12 +314,4 @@ function lock1(){
     ChangeTitle("Gewonnen! :)")
     ChangeDescriptionText("Gefeliciteerd je hebt het spel uitgespeeld! ;)")
     Restart()
-}
-
-function lock2(){
-    locks[1].style.display = "none"
-}
-
-function lock3(){
-    locks[2].style.display = "none"
 }
