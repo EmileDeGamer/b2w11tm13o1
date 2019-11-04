@@ -7,21 +7,19 @@ let button1 = document.getElementById('button1')
 let button2 = document.getElementById('button2')
 let button3 = document.getElementById('button3')
 let inventoryItem = document.getElementById('inventoryItem')
-let object
+let object, locks = []
 
-let inventoryItems = { "Knife" : false, "Key" : false}
-let fullscreenEnabled = "false"
-let kills = 0
-description.style.fontSize = "22.5px"
+let fullscreenEnabled = "false", pauseMenu = "false"
+let kills = 0                   
 
 main()
 
 function main(){
-    CheckInventoryItem()
+    inventoryItem.style.display = "none"
     ChangeTitle("Adventure Game")
     ChangeBackground("Main", "cover")
     ChangeButtonText("Start", "Opties", "")
-    ChangeDescriptionText("Welkom bij deze coole adventure game! :)")
+    ChangeDescriptionText("Welkom bij deze coole adventure game! :) \nZoek het mes en de sleutel en win zo de game! :) MAAR pas op voor gevaarlijke monsters! :(")
     buttons.style.position = "relative"
     ChangeButtonFunction(start, options, )
     ChangeButtonPosition("relative", "relative", "relative")
@@ -70,11 +68,11 @@ function rechtdoor(){
 
 function level2(){
     ChangeBackground("Brug", "cover")
-    ChangeButtonDisplay("inline-block", "inline-block", "inline-block")
+    ChangeButtonDisplay("inline-block", "inline-block", "none")
     ChangeTitle("Level 2: De levensgevaarlijke brug")
     ChangeDescriptionText("Kies wat u op de brug wilt doen! :)")
-    ChangeButtonText("Verder gaan op de brug", "Zwemmend opzoek gaan naar een eiland", "Jezelf neersteken")
-    ChangeButtonFunction(brug, zwemmen, neersteken)
+    ChangeButtonText("Verder gaan op de brug", "Zwemmend opzoek gaan naar een eiland")
+    ChangeButtonFunction(brug, zwemmen, )
 }
 
 function brug(){
@@ -88,20 +86,21 @@ function brug(){
 
 function vernietigen(){
     kills++
-    CheckKills()
+    ChangeInventoryItem("Knife")
     ChangeDescriptionText("Yes! De octopus is verslagen! :)")
     ChangeTitle("Level 3: Octopus verslagen")
-    ChangeButtonDisplay("inline-block", "none", "none")
-    ChangeButtonText("Vervolgen", "", "")
+    ChangeButtonDisplay("none", "none", "none")
     ChangeBackground("Water", "cover")
-    ChangeButtonFunction(vervolgen, "" ,)
-    inventoryItems["Key"] = true
-    ChangeInventoryItem = "Key"
+    ChangeInventoryItem("Key")
     alert("U heeft de octopus verslagen en u heeft een sleutel gevonden! :) \nVervolg u route! :)")
+    vervolgen()
 }
 
 function vervolgen(){
-
+    ChangeBackground("Einde", "cover")
+    ChangeTitle("Level 4: Einde")
+    ChangeDescriptionText("Kies 1 van de 3 sleutelgaten. LET OP: er is er maar 1 die past! ;)")
+    CreateLocks(3)
 }
 
 function meenemen(){
@@ -118,21 +117,12 @@ function zwemmen(){
     Restart()
 }
 
-function neersteken(){
-    kills++
-    CheckKills()
-    ChangeBackground("DOOD", "contain")
-    Restart()
-    ChangeDescriptionText("Helaas, u heeft u zelf neergestoken! :(")
-    ChangeTitle("DOOD")
-}
-
 function steekBeer(){
     level1()
     ChangeBackground("Start", "cover")
     ChangeButtonDisplay("none", "inline-block", "inline-block")
     kills++
-    CheckKills()
+    ChangeInventoryItem("Knife")
     alert("U heeft de beer verslagen! :) \nVervolg u route! :)")
 }
 
@@ -176,15 +166,6 @@ function Restart(){
 
 function reloadPage(){
     location.reload()
-}
-
-function CheckKills(){
-    if (kills == 1){
-        ChangeInventoryItem("KnifeWithBlood")
-    }
-    if (kills == 2){
-        ChangeInventoryItem("KnifeWithDoubleBlood")
-    }
 }
 
 function ChangeButtonFunction(function1, function2, funtion3){
@@ -235,25 +216,31 @@ function ChangeBackground(background, type){
     game.style.height = "100vh"
 }
 
-function CheckInventoryItem(){
-    if (inventoryItems["Knife"] == false && inventoryItems["Key"] == false){
-        inventoryItem.style.display = "none"
-    }
-}
-
 function ChangeInventoryItem(item){
-    if (item == "Knife"){
+    if (item == "Knife"){ 
         let item1 = document.createElement('img')
-        item1.style.display = "block"
-        item1.style.position = "absolute"
-        item1.style.top = "10%"
-        item1.src = "./images/" + item + ".png"
-        item1.alt = item
-        item1.style.width = "100px"
-        item1.style.height = "100px"
-        document.body.appendChild(item1)
+            item1.style.display = "block"
+            item1.style.position = "absolute"
+            item1.style.top = "10%"    
+            item1.style.left = "15px"
+            item1.alt = item
+            item1.style.width = "100px"
+            item1.style.height = "100px"
+        if (kills == 0){ 
+            item1.src = "./images/" + item + ".png"
+            document.body.appendChild(item1)
+        }
+        else if (kills == 1){
+            item1.src = "./images/KnifeWithBlood.png"
+            document.body.appendChild(item1)
+        }
+        else if (kills == 2){
+            item1.src = "./images/KnifeWithDoubleBlood.png"
+            document.body.appendChild(item1)
+        }
     }
-    else if (item == "Key"){
+    
+    if (item == "Key"){
         let item2 = document.createElement('img')
         item2.style.display = "block"
         item2.style.position = "absolute"
@@ -267,7 +254,6 @@ function ChangeInventoryItem(item){
 }
 
 function objectPickup(name){
-    inventoryItems[name] = true
     object.style.display = "none"
     alert('Je hebt de ' + name + " gevonden! :)")
     if (name == "Knife"){
@@ -298,7 +284,39 @@ function ChangeObjectOffsetLeft(offset){
     object.style.left = offset
 }
 
-/*let span = document.createElement('span')
-    span.innerHTML = item
-    span.id = "inventoryItemText"
-    document.body.appendChild(span)*/
+function CreateLocks(amount){
+    for (let i = 0; i < amount; i++) {
+        locks.push(document.createElement('img'))
+    }
+    for (let i = 0; i < locks.length; i++) {
+        locks[i].id = "Object"
+        locks[i].src = "./images/lock.png"
+        locks[i].style.width = "25px"
+        locks[i].style.height = "25px"
+        locks[i].style.position = "absolute"
+        locks[i].style.top = Math.floor(Math.random() * screen.height / 20) + "%"
+        locks[i].style.left = Math.floor(Math.random() * screen.width / 20) + "%"
+        document.body.appendChild(locks[i])
+    }
+    locks[0].onclick = function(){lock1()}
+    locks[1].onclick = function(){lock2()}
+    locks[2].onclick = function(){lock3()}
+}
+
+function lock1(){
+    for (let i = 0; i < locks.length; i++) {
+        locks[i].style.display = "none"
+    }
+    ChangeBackground("Finish", "contain")
+    ChangeTitle("Gewonnen! :)")
+    ChangeDescriptionText("Gefeliciteerd je hebt het spel uitgespeeld! ;)")
+    Restart()
+}
+
+function lock2(){
+    locks[1].style.display = "none"
+}
+
+function lock3(){
+    locks[2].style.display = "none"
+}
