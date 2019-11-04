@@ -168,6 +168,16 @@ function reloadPage(){
     location.reload()
 }
 
+function win(){
+    for (let i = 0; i < locks.length; i++) {
+        locks[i].style.display = "none"
+    }
+    ChangeBackground("Finish", "contain")
+    ChangeTitle("Gewonnen! :)")
+    ChangeDescriptionText("Gefeliciteerd je hebt het spel uitgespeeld! ;)")
+    Restart()
+}
+
 function ChangeButtonFunction(function1, function2, funtion3){
     button1.onclick = function(){function1()}
     button2.onclick = function(){function2()}
@@ -304,14 +314,4 @@ function CreateLocks(amount){
         }
         document.body.appendChild(locks[i])
     }
-}
-
-function win(){
-    for (let i = 0; i < locks.length; i++) {
-        locks[i].style.display = "none"
-    }
-    ChangeBackground("Finish", "contain")
-    ChangeTitle("Gewonnen! :)")
-    ChangeDescriptionText("Gefeliciteerd je hebt het spel uitgespeeld! ;)")
-    Restart()
 }
