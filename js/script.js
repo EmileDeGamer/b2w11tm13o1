@@ -162,7 +162,7 @@ function Restart(){
     ChangeButtonDisplay("none", "inline-block", "none")
     ChangeButtonText("", "Opnieuw", "")
     ChangeButtonFunction("",reloadPage,)
-}
+}                    
 
 function reloadPage(){
     location.reload()
