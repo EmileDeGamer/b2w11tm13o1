@@ -99,8 +99,8 @@ function vernietigen(){
 function vervolgen(){
     ChangeBackground("Einde", "cover")
     ChangeTitle("Level 4: Einde")
-    ChangeDescriptionText("Kies 1 van de " + locks.length  + " sleutelgaten. LET OP: er is er maar 1 die past! ;)")
     CreateLocks(Math.floor(Math.random() * (10 - 3 + 1)) + 3)
+    ChangeDescriptionText("Kies 1 van de " + locks.length  + " sleutelgaten. LET OP: er is er maar 1 die past! ;)")
 }
 
 function meenemen(){
