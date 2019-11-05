@@ -93,10 +93,10 @@ function vernietigen(){
     ChangeBackground("Water", "cover")
     ChangeInventoryItem("Key")
     alert("U heeft de octopus verslagen en u heeft een sleutel gevonden! :) \nVervolg u route! :)")
-    vervolgen()
+    einde()
 }
 
-function vervolgen(){
+function einde(){
     ChangeBackground("Einde", "cover")
     ChangeTitle("Level 4: Einde")
     CreateLocks(Math.floor(Math.random() * (10 - 3 + 1)) + 3)
